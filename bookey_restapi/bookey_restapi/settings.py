@@ -25,7 +25,7 @@ SECRET_KEY = 't8v6y6&n9bj%r5)w(deml64#&abgpytmari$wq(ut^r2f_&0^1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -75,8 +75,15 @@ WSGI_APPLICATION = 'bookey_restapi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'bookey_db',
+        'USER': '1714223',
+        'PASSWORD': '0917',
+        'HOST': '203.252.195.63',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
+        }
     }
 }
 
