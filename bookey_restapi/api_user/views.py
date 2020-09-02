@@ -44,4 +44,4 @@ class UserView(APIView):
             uid = kwargs.get('uid')
             user_object = AppUser.objects.get(pk=uid)
             user_object.delete()
-            return Response("delete ok", status=status.HTTP_200_OK)
+            return Response("user delete ok", status=status.HTTP_200_OK)
