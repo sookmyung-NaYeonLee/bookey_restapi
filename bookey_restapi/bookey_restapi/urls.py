@@ -20,5 +20,6 @@ from django.conf.urls import include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('api_user.urls'), name='api_user'), #include 함수를 통해 api_usr의 urls.py로 라우팅 해준다.
-    path('books/', include('api_book.urls'), name='api_book')
+    path('books/', include('api_book.urls'), name='api_book'),
+    path('bookshelves/', include('api_bookshelf.urls'), name='api_bookshelf'),
 ]

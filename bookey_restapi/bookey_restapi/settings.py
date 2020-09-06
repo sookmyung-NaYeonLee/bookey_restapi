@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api_user',
     'api_book',
+    'api_bookshelf',
 ]
 
 MIDDLEWARE = [
