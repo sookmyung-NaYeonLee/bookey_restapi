@@ -1,9 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import BookshelfSerializer
+from .serializers import BookshelfInfoSerializer
 from rest_framework import status
-from bookey_restapi.api_book.models import Book
 from .models import Bookshelf
+
 
 
 class BookshelfView(APIView):
@@ -17,14 +18,17 @@ class BookshelfView(APIView):
             return Response(bookshelf_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, **kwargs):
-        if kwargs.get('userId') is None and kwargs.get('bookId'):
+        if kwargs.get('userId') is None and kwargs.get('bookId') is None:
             bookshelf_queryset = Bookshelf.objects.all()
             bookshelf_queryset_serializer = BookshelfSerializer(bookshelf_queryset, many=True)
             return Response(bookshelf_queryset_serializer.data, status=status.HTTP_200_OK)
         elif kwargs.get('bookId') is None:
-            #여기 수정해야 됨
             userId = kwargs.get('userId')
             bookshelf_queryset = Bookshelf.objects.filter(uid=userId)
+            bookshelf_queryset_serializer = BookshelfInfoSerializer(bookshelf_queryset, many=True)
+            return Response(bookshelf_queryset_serializer.data, status=status.HTTP_200_OK)
+        else:
+            bookshelf_queryset = Bookshelf.objects.all()
             bookshelf_queryset_serializer = BookshelfSerializer(bookshelf_queryset, many=True)
             return Response(bookshelf_queryset_serializer.data, status=status.HTTP_200_OK)
 
@@ -35,7 +39,7 @@ class BookshelfView(APIView):
         else:
             userId = kwargs.get('userId')
             bookId = kwargs.get('bookId')
-            bookshelf_object = Bookshelf.objects.filter(uid=userId, bid=bookId)
+            bookshelf_object = Bookshelf.objects.get(uid=userId, bid=bookId)
 
             update_bookshelf_serializer = BookshelfSerializer(bookshelf_object, data=request.data)
             if update_bookshelf_serializer.is_valid():
