@@ -22,15 +22,20 @@ class BookshelfView(APIView):
             bookshelf_queryset = Bookshelf.objects.all()
             bookshelf_queryset_serializer = BookshelfSerializer(bookshelf_queryset, many=True)
             return Response(bookshelf_queryset_serializer.data, status=status.HTTP_200_OK)
+
         else:
-            bookshelf_queryset = Bookshelf.objects.all()
-            bookshelf_queryset_serializer = BookshelfSerializer(bookshelf_queryset, many=True)
+            userId = kwargs.get('userId')
+            bookId = kwargs.get('bookId')
+            bookshelf_queryset = Bookshelf.objects.get(uid=userId, bid=bookId)
+
+            bookshelf_queryset_serializer = BookshelfInfoSerializer(bookshelf_queryset)
             return Response(bookshelf_queryset_serializer.data, status=status.HTTP_200_OK)
 
 
     def put(self, request, **kwargs):
-        if kwargs.get('uid') is None or kwargs.get('bid') is None:
+        if kwargs.get('userId') is None or kwargs.get('bookId') is None:
             return Response("invalid request", status=status.HTTP_400_BAD_REQUEST)
+
         else:
             userId = kwargs.get('userId')
             bookId = kwargs.get('bookId')
@@ -44,7 +49,7 @@ class BookshelfView(APIView):
                 return Response("invalid request", status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, **kwargs):
-        if kwargs.get('uid') is None or kwargs.get('bid') is None:
+        if kwargs.get('userId') is None or kwargs.get('bookId') is None:
             return Response("invalid request", status=status.HTTP_400_BAD_REQUEST)
         else:
             userId = kwargs.get('userId')

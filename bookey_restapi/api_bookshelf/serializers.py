@@ -13,4 +13,4 @@ class BookshelfInfoSerializer(serializers.ModelSerializer):
         bid = BookInfoSerializer(read_only=True)
         class Meta:
             model = Bookshelf
-            fields = ('bid', 'review')
+            fields = ('uid', 'bid', 'review')
