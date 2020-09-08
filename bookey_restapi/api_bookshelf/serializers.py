@@ -10,8 +10,7 @@ class BookshelfSerializer(serializers.ModelSerializer):
 
 
 class BookshelfInfoSerializer(serializers.ModelSerializer):
-    class Meta:
-        bookinfo = BookInfoSerializer(read_only=True)
+        bid = BookInfoSerializer(read_only=True)
         class Meta:
             model = Bookshelf
-            fields = ('bookinfo', 'review')
+            fields = ('bid', 'review')

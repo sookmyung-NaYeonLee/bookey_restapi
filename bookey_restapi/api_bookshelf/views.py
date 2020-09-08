@@ -22,11 +22,6 @@ class BookshelfView(APIView):
             bookshelf_queryset = Bookshelf.objects.all()
             bookshelf_queryset_serializer = BookshelfSerializer(bookshelf_queryset, many=True)
             return Response(bookshelf_queryset_serializer.data, status=status.HTTP_200_OK)
-        elif kwargs.get('bookId') is None:
-            userId = kwargs.get('userId')
-            bookshelf_queryset = Bookshelf.objects.filter(uid=userId)
-            bookshelf_queryset_serializer = BookshelfInfoSerializer(bookshelf_queryset, many=True)
-            return Response(bookshelf_queryset_serializer.data, status=status.HTTP_200_OK)
         else:
             bookshelf_queryset = Bookshelf.objects.all()
             bookshelf_queryset_serializer = BookshelfSerializer(bookshelf_queryset, many=True)
@@ -57,3 +52,10 @@ class BookshelfView(APIView):
             bookshelf_object = Bookshelf.objects.filter(uid=userId, bid=bookId)
             bookshelf_object.delete()
             return Response("test ok", status=status.HTTP_200_OK)
+
+class BookshelfSearchView(APIView):
+    def get(self, request, **kwargs):
+        userId = kwargs.get('userId')
+        bookshelf_queryset = Bookshelf.objects.filter(uid=userId)
+        bookshelf_queryset_serializer = BookshelfInfoSerializer(bookshelf_queryset, many=True)
+        return Response(bookshelf_queryset_serializer.data, status=status.HTTP_200_OK)
