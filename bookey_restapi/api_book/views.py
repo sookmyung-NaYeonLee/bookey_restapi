@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import BookSerializer
+from .serializers import BookSerializer, BestSellerSerializer, BestSellerRankSerializer
 from rest_framework import status
-from .models import Book
+from .models import Book, BestSeller
 from django.db.models import Q
 from urllib import parse
 
@@ -10,7 +10,7 @@ from urllib import parse
 class BookView(APIView):
     def get(self, request, **kwargs):
         if kwargs.get('bid') is None:
-            book_queryset = Book.objects.all()  # 모든 User의 정보를 불러온다.
+            book_queryset = Book.objects.all()  # 모든 Book의 정보를 불러온다.
             book_queryset_serializer = BookSerializer(book_queryset, many=True)
             return Response(book_queryset_serializer.data, status=status.HTTP_200_OK)
         else:
@@ -61,3 +61,25 @@ class BookSearchView(APIView):
             book_queryset = Book.objects.filter(name_q | author_q)
             book_serializer = BookSerializer(book_queryset, many=True)
             return Response(book_serializer.data, status=status.HTTP_200_OK)
+
+class BestSellerView(APIView):
+    def get(self, request, **kwargs):
+        if kwargs.get('bid') is None:
+            best_queryset = BestSeller.objects.filter(rank__range=(1,31)).order_by('rank')  # 모든 Book의 정보를 불러온다.
+            best_queryset_serializer = BestSellerSerializer(best_queryset, many=True)
+            return Response(best_queryset_serializer.data, status=status.HTTP_200_OK)
+        else:
+            bid = kwargs.get('bid')
+            best_serializer = BestSellerSerializer(BestSeller.objects.get(pk=bid))
+            return Response(best_serializer.data, status=status.HTTP_200_OK)
+
+
+class BestSellerRankView(APIView):
+    def get(self, request, **kwargs):
+        if kwargs.get('bid') is None:
+            return Response("invalid request", status=status.HTTP_400_BAD_REQUEST)
+        else:
+            bid = kwargs.get('bid')
+            best_serializer = BestSellerRankSerializer(BestSeller.objects.get(pk=bid))
+            return Response(best_serializer.data, status=status.HTTP_200_OK)
+

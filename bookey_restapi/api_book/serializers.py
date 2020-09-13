@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Book
+from .models import Book, BestSeller
 
 
 class BookSerializer(serializers.ModelSerializer):
@@ -12,4 +12,17 @@ class BookSerializer(serializers.ModelSerializer):
 class BookInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = ('bid', 'name', 'img_url')
+        fields = ('bid', 'title', 'img_url')
+
+
+class BestSellerSerializer(serializers.ModelSerializer):
+    bid = BookSerializer(read_only=True)
+    class Meta:
+        model = BestSeller
+        fields = ('bid', 'rank')
+
+
+class BestSellerRankSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BestSeller
+        fields = ('rank')
