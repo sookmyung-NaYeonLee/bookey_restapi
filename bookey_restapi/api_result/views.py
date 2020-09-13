@@ -6,4 +6,11 @@ from .models import Result
 
 class ResultView(APIView):
     def get(self, request, **kwargs):
-        return Response(status=status.HTTP_200_OK)
+        if kwargs.get('bid') is None:
+            result_queryset = Result.objects.all()
+            result_queryset_serializer = ResultSerializer(result_queryset, many=True)
+            return Response(result_queryset_serializer.data, status=status.HTTP_200_OK)
+        else:
+            bid = kwargs.get('bid')
+            result_serializer = ResultSerializer(Result.object.get(pk=bid))
+            return Response(result_serializer.data, status=status.HTTP_200_OK)
