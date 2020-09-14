@@ -16,7 +16,7 @@ class Book(models.Model):
 
 class BestSeller(models.Model):
     bid = models.ForeignKey(Book, primary_key=True, on_delete=models.CASCADE, db_column='bid')
-    rank = models.IntegerField(max_length=20)
+    rank = models.IntegerField()
 
     class Meta:
         db_table = 'BestSeller'

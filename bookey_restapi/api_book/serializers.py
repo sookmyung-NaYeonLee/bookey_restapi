@@ -25,4 +25,4 @@ class BestSellerSerializer(serializers.ModelSerializer):
 class BestSellerRankSerializer(serializers.ModelSerializer):
     class Meta:
         model = BestSeller
-        fields = ('rank')
+        fields = '__all__'
