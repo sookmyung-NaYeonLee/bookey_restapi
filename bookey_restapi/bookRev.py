@@ -7,7 +7,8 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bookey_restapi.settings")
 import django
 django.setup()
-from .api_book.models import Book
+from api_book.models import *
+
 
 bestSeller = pd.read_csv("kyobo_08best.csv", encoding="CP949")
 before_url = 'http://www.kyobobook.co.kr/product/productSimpleReviewSort.laf?gb=klover&barcode=9788901243665&ejkGb=KOR&mallGb=&sortType=like'
