@@ -65,7 +65,7 @@ class BookSearchView(APIView):
 class BestSellerView(APIView):
     def get(self, request, **kwargs):
         if kwargs.get('bid') is None:
-            best_queryset = BestSeller.objects.filter(rank__range=(1,31)).order_by('rank')  # 모든 Book의 정보를 불러온다.
+            best_queryset = BestSeller.objects.filter(rank__range=(1,30)).order_by('rank')  # 모든 Book의 정보를 불러온다.
             best_queryset_serializer = BestSellerSerializer(best_queryset, many=True)
             return Response(best_queryset_serializer.data, status=status.HTTP_200_OK)
         else:
