@@ -24,5 +24,5 @@ urlpatterns = [
     path('bookshelves/', include('api_bookshelf.urls'), name='api_bookshelf'),
     path('results/', include('api_result.urls'), name='api_result'),
     path('books/best/', include('api_book.best_urls')),
-    path('books/rank/', include('api_book.rank_urls')),
+    path('books/best/rank/', include('api_book.rank_urls')),
 ]

@@ -56,7 +56,7 @@ class BookSearchView(APIView):
             return Response("invalid request", status=status.HTTP_400_BAD_REQUEST)
         else:
             search_key = parse.unquote(kwargs.get('search_key'))
-            name_q = Q(name__icontains = search_key)
+            name_q = Q(title__icontains = search_key)
             author_q = Q(author__icontains = search_key)
             book_queryset = Book.objects.filter(name_q | author_q)
             book_serializer = BookSerializer(book_queryset, many=True)
@@ -77,9 +77,7 @@ class BestSellerView(APIView):
 class BestSellerRankView(APIView):
     def get(self, request, **kwargs):
         if kwargs.get('bid') is None:
-            best_queryset = BestSeller.objects.all().order_by('rank')
-            best_serializer = BestSellerRankSerializer(best_queryset, many=True)
-            return Response(best_serializer.data, status=status.HTTP_200_OK)
+            return Response("invalid request", status=status.HTTP_400_BAD_REQUEST)
         else:
             bid = kwargs.get('bid')
             best_serializer = BestSellerRankSerializer(BestSeller.objects.get(pk=bid))
