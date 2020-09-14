@@ -77,7 +77,9 @@ class BestSellerView(APIView):
 class BestSellerRankView(APIView):
     def get(self, request, **kwargs):
         if kwargs.get('bid') is None:
-            return Response("invalid request", status=status.HTTP_400_BAD_REQUEST)
+            best_queryset = BestSeller.objects.all().order_by('rank')
+            best_serializer = BestSellerRankSerializer(best_queryset, many=True)
+            return Response(best_serializer.data, status=status.HTTP_200_OK)
         else:
             bid = kwargs.get('bid')
             best_serializer = BestSellerRankSerializer(BestSeller.objects.get(pk=bid))
