@@ -12,5 +12,5 @@ class ResultView(APIView):
             return Response(result_queryset_serializer.data, status=status.HTTP_200_OK)
         else:
             bid = kwargs.get('bid')
-            result_serializer = ResultSerializer(Result.object.get(pk=bid))
+            result_serializer = ResultSerializer(Result.objects.get(pk=bid))
             return Response(result_serializer.data, status=status.HTTP_200_OK)
