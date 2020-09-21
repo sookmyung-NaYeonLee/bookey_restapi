@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +28,4 @@ urlpatterns = [
     path('results/', include('api_result.urls'), name='api_result'),
     path('books/best/', include('api_book.best_urls')),
     path('books/best/rank/', include('api_book.rank_urls')),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
