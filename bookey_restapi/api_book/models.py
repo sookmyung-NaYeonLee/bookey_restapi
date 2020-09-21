@@ -20,3 +20,4 @@ class BestSeller(models.Model):
 
     class Meta:
         db_table = 'BestSeller'
+

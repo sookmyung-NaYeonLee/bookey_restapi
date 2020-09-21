@@ -26,3 +26,4 @@ class BestSellerRankSerializer(serializers.ModelSerializer):
     class Meta:
         model = BestSeller
         fields = ('rank',)
+
